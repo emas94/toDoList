@@ -4,6 +4,7 @@ const inputSearch = document.querySelector('.searchInput');
 const inputAdd = document.querySelector('.addInput');
 const divOfTask = document.querySelector('.listOfTask span');
 const form = document.querySelector('form');
+const addBTN = document.querySelector('.add');
 const data = {
   numberOfTask: li.length,
 }
@@ -19,7 +20,7 @@ const removeTask = (e) => {
   // e.target.parentNode.style.color = 'red';
   // const index = e.target.dataset.key;
   // document.querySelector(`li[data-key="${index}"]`).remove();
-
+  scoreHeight();
 }
 document.querySelectorAll('button[data-key]').forEach(item => item.addEventListener('click', removeTask));
 
@@ -61,6 +62,8 @@ const addTasks = (e) => {
 
     createNewTask.querySelector('div').addEventListener('click', removeTask);
     divOfTask.textContent = li.length;
+
+    scoreHeight();
   }
 }
 form.addEventListener('submit', addTasks);
@@ -73,3 +76,17 @@ const renderList = () => {
     inputAdd.value = "";
   })
 }
+
+const scoreHeight = () => {
+  if (divOfTask.textContent > 0) {
+    document.querySelector('.listDiv').style.height = 600 + "px";
+  } else {
+    document.querySelector('.listDiv').style.height = 100 + "%";
+  }
+}
+
+
+
+// if (toDoList.length != 0) {
+//   document.querySelector('.listDiv').style.height = 600 + "px";
+// }
