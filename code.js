@@ -14,12 +14,7 @@ const removeTask = (e) => {
   const index = e.target.parentNode.dataset.key;
 
   toDoList.splice(index, 1);
-  ul.textContent = "";
-  toDoList.forEach((toDoElement, key) => {
-    toDoElement.dataset.key = key;
-    ul.appendChild(toDoElement);
-    divOfTask.textContent = li.length;
-  })
+  renderList();
   divOfTask.textContent = li.length;
   // e.target.parentNode.style.color = 'red';
   // const index = e.target.dataset.key;
@@ -30,21 +25,17 @@ document.querySelectorAll('button[data-key]').forEach(item => item.addEventListe
 
 
 const searchTask = (e) => {
-  const searchTxt = e.target.value.toLowerCase();
-  let tasks = [...li];
 
+  const searchTxt = e.target.value.toLowerCase();
+  let tasks = [...toDoList];
   tasks = tasks.filter(li => li.textContent.toLowerCase().includes(searchTxt));
+  ul.textContent = "";
   if (searchTxt == "") {
-    toDoList.forEach((toDoElement, key) => {
-      toDoElement.dataset.key = key;
-      ul.appendChild(toDoElement);
-      divOfTask.textContent = li.length;
-    })
+    renderList();
   } else {
-    ul.textContent = "";
     tasks.forEach((li) => {
       ul.appendChild(li)
-      divOfTask.textContent = tasks.length;
+      // divOfTask.textContent = tasks.length;
     });
   }
   if (tasks) {
@@ -62,14 +53,9 @@ const addTasks = (e) => {
   if (inputAdd.value !== "") {
     const createNewTask = document.createElement('li');
     createNewTask.className = "task"
-    createNewTask.innerHTML = tittleTask + ` <div data-key="${index}"></div>`;
+    createNewTask.innerHTML = tittleTask + `<div data-key="${index}"></div>`;
     toDoList.push(createNewTask);
-    ul.textContent = "";
-    toDoList.forEach((toDoElement, key) => {
-      toDoElement.dataset.key = key;
-      ul.appendChild(toDoElement);
-      inputAdd.value = "";
-    })
+    renderList();
     ul.appendChild(createNewTask);
 
 
@@ -78,3 +64,12 @@ const addTasks = (e) => {
   }
 }
 form.addEventListener('submit', addTasks);
+
+const renderList = () => {
+  ul.textContent = "";
+  toDoList.forEach((toDoElement, key) => {
+    toDoElement.dataset.key = key;
+    ul.appendChild(toDoElement);
+    inputAdd.value = "";
+  })
+}
